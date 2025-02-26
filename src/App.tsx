@@ -1,22 +1,26 @@
 import { useState } from "react";
 import "./App.css";
 import Webcam from "react-webcam";
+import GithubIcon from "./assets/icons/githubIcon.png";
 
 function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-8">
       <h1 className="text-3xl font-bold text-gray-100 mb-4 relative group">
         <span className="relative z-10">PhotoBooth</span>
-        <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+        <div className="flex justify-center items-center mt-1">
+          <p className="text-sm text-gray-400">
+            Made by joaosilva7875@gmail.com
+          </p>
+          <a target="_blank" href="https://github.com/Joaosilva27">
+            <img src={GithubIcon} className="w-4 h-4 ml-1.5 animate-bounce" />
+          </a>
+        </div>
       </h1>
 
       <div className="relative group">
         <div className="relative border-2 border-gray-700 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-600 hover:shadow-lg hover:shadow-gray-800/50">
-          <Webcam
-            height={400}
-            width={400}
-            className="object-cover aspect-square"
-          />
+          <Webcam height={400} width={600} className="object-cover" />
           <div className="absolute inset-0 border-[0.5px] border-white/10 pointer-events-none"></div>
         </div>
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -57,10 +61,6 @@ function App() {
           Save
         </button>
       </div>
-
-      <p className="text-sm text-gray-400 mt-4">
-        Made by joaosilva7875@gmail.com
-      </p>
     </div>
   );
 }
