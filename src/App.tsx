@@ -9,6 +9,7 @@ function App() {
   const [imgSrcOne, setImgSrcOne] = useState<string | null>(null);
   const [imgSrcTwo, setImgSrcTwo] = useState<string | null>(null);
   const [imgSrcThree, setImgSrcThree] = useState<string | null>(null);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   // utility function for delaying
   const delay = (ms: number) =>
@@ -18,6 +19,7 @@ function App() {
     setImgSrcOne(null);
     setImgSrcTwo(null);
     setImgSrcThree(null);
+    setIsCapturing(true);
     const captureSequence = async () => {
       if (webcamRef.current) {
         try {
@@ -43,6 +45,7 @@ function App() {
           console.log("Error capturing image:", err);
         }
       }
+      setIsCapturing(false);
     };
 
     captureSequence();
@@ -88,24 +91,26 @@ function App() {
       </div>
 
       <div className="flex gap-4">
-        <button
-          onClick={capture}
-          className="px-6 py-2.5 bg-gray-800 rounded-lg text-gray-100 hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2 border border-gray-700 hover:border-gray-600"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-blue-400"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+        {isCapturing == false ? (
+          <button
+            onClick={capture}
+            className="px-6 py-2.5 bg-gray-800 rounded-lg text-gray-100 hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2 border border-gray-700 hover:border-gray-600"
           >
-            <path
-              fillRule="evenodd"
-              d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Capture
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-blue-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Capture
+          </button>
+        ) : null}
 
         <button className="px-6 py-2.5 bg-gray-800 rounded-lg text-gray-300 hover:text-gray-100 transition-colors duration-200 flex items-center gap-2 border border-gray-700 hover:border-gray-600">
           <svg
