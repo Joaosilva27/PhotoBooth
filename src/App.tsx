@@ -7,13 +7,45 @@ function App() {
   const webcamRef = useRef<Webcam>(null);
 
   const [imgSrcOne, setImgSrcOne] = useState<string | null>(null);
+  const [imgSrcTwo, setImgSrcTwo] = useState<string | null>(null);
+  const [imgSrcThree, setImgSrcThree] = useState<string | null>(null);
+
+  // utility function for delaying
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
   const capture = useCallback(() => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
-      setImgSrcOne(imageSrc);
-      console.log(imageSrc); // Logs the image screenshot URL
-    }
+    setImgSrcOne(null);
+    setImgSrcTwo(null);
+    setImgSrcThree(null);
+    const captureSequence = async () => {
+      if (webcamRef.current) {
+        try {
+          // capture first image
+          const imageSrcOne = webcamRef.current.getScreenshot();
+          setImgSrcOne(imageSrcOne);
+          console.log("First image captured:", imageSrcOne);
+
+          // wait for 5 seconds before capturing the second image
+          await delay(5000);
+
+          // capture second image after the delay
+          const imageSrcTwo = webcamRef.current.getScreenshot();
+          setImgSrcTwo(imageSrcTwo);
+          console.log("Second image captured:", imageSrcTwo);
+
+          await delay(5000);
+          // capture third image after the delay
+          const imageSrcThree = webcamRef.current.getScreenshot();
+          setImgSrcThree(imageSrcThree);
+          console.log("Second image captured:", imageSrcThree);
+        } catch (err) {
+          console.log("Error capturing image:", err);
+        }
+      }
+    };
+
+    captureSequence();
   }, [webcamRef]);
 
   return (
@@ -33,7 +65,7 @@ function App() {
       <div className="relative group">
         <div className="relative border-2 border-gray-700 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-600 hover:shadow-lg hover:shadow-gray-800/50">
           <Webcam
-            ref={webcamRef} // Attach the webcamRef to the Webcam component
+            ref={webcamRef}
             height={400}
             width={600}
             className="object-cover"
@@ -81,12 +113,12 @@ function App() {
           Save
         </button>
       </div>
-      {imgSrcOne ? (
+      {imgSrcOne && (
         <div>
-          <img src={imgSrcOne} className="h-10 w-10" />
+          <img src={imgSrcOne} className="h-30 w-30" />
+          {imgSrcTwo && <img src={imgSrcTwo} className="h-30 w-30" />}
+          {imgSrcThree && <img src={imgSrcThree} className="h-30 w-30" />}
         </div>
-      ) : (
-        <span></span>
       )}
     </div>
   );
