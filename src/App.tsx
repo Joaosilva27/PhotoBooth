@@ -38,7 +38,7 @@ function App() {
           // capture third image after the delay
           const imageSrcThree = webcamRef.current.getScreenshot();
           setImgSrcThree(imageSrcThree);
-          console.log("Second image captured:", imageSrcThree);
+          console.log("Third image captured:", imageSrcThree);
         } catch (err) {
           console.log("Error capturing image:", err);
         }
@@ -62,18 +62,28 @@ function App() {
         </div>
       </h1>
 
-      <div className="relative group">
-        <div className="relative border-2 border-gray-700 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-600 hover:shadow-lg hover:shadow-gray-800/50">
+      <div className="flex flex-row flex-wrap justify-center items-center">
+        <div className="relative border-2 border-gray-700 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-600 hover:shadow-lg hover:shadow-gray-800/50 h-fit">
           <Webcam
             ref={webcamRef}
             height={400}
             width={600}
             className="object-cover"
           />
-          <div className="absolute inset-0 border-[0.5px] border-white/10 pointer-events-none"></div>
         </div>
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="absolute w-[95%] h-[95%] border-2 border-white/5 rounded-xl pointer-events-none"></div>
+
+        <div>
+          {imgSrcOne && (
+            <div className="m-8">
+              <img src={imgSrcOne} className="h-40 w-40 object-cover m-4" />
+              {imgSrcTwo && (
+                <img src={imgSrcTwo} className="h-40 w-40 object-cover m-4" />
+              )}
+              {imgSrcThree && (
+                <img src={imgSrcThree} className="h-40 w-40 object-cover m-4" />
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -113,13 +123,6 @@ function App() {
           Save
         </button>
       </div>
-      {imgSrcOne && (
-        <div>
-          <img src={imgSrcOne} className="h-30 w-30" />
-          {imgSrcTwo && <img src={imgSrcTwo} className="h-30 w-30" />}
-          {imgSrcThree && <img src={imgSrcThree} className="h-30 w-30" />}
-        </div>
-      )}
     </div>
   );
 }
