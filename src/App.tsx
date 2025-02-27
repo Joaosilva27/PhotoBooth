@@ -5,7 +5,7 @@ import GithubIcon from "./assets/icons/githubIcon.png";
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-8">
+    <div className="min-h-screen flex flex-col items-center p-4 space-y-8">
       <h1 className="text-3xl font-bold text-gray-100 mb-4 relative group">
         <span className="relative z-10">PhotoBooth</span>
         <div className="flex justify-center items-center mt-1">
