@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import "./App.css";
 import Webcam from "react-webcam";
 import GithubIcon from "./assets/icons/githubIcon.png";
 
 function App() {
+  const webcamRef = useRef<Webcam>(null);
+
+  const [imgSrcOne, setImgSrcOne] = useState<string | null>(null);
+
+  const capture = useCallback(() => {
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setImgSrcOne(imageSrc);
+      console.log(imageSrc); // Logs the image screenshot URL
+    }
+  }, [webcamRef]);
+
   return (
     <div className="min-h-screen flex flex-col items-center p-4 space-y-8">
       <h1 className="text-3xl font-bold text-gray-100 mb-4 relative group">
@@ -20,7 +32,12 @@ function App() {
 
       <div className="relative group">
         <div className="relative border-2 border-gray-700 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-600 hover:shadow-lg hover:shadow-gray-800/50">
-          <Webcam height={400} width={600} className="object-cover" />
+          <Webcam
+            ref={webcamRef} // Attach the webcamRef to the Webcam component
+            height={400}
+            width={600}
+            className="object-cover"
+          />
           <div className="absolute inset-0 border-[0.5px] border-white/10 pointer-events-none"></div>
         </div>
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -29,7 +46,10 @@ function App() {
       </div>
 
       <div className="flex gap-4">
-        <button className="px-6 py-2.5 bg-gray-800 rounded-lg text-gray-100 hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2 border border-gray-700 hover:border-gray-600">
+        <button
+          onClick={capture}
+          className="px-6 py-2.5 bg-gray-800 rounded-lg text-gray-100 hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2 border border-gray-700 hover:border-gray-600"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 text-blue-400"
@@ -61,6 +81,13 @@ function App() {
           Save
         </button>
       </div>
+      {imgSrcOne ? (
+        <div>
+          <img src={imgSrcOne} className="h-10 w-10" />
+        </div>
+      ) : (
+        <span></span>
+      )}
     </div>
   );
 }
