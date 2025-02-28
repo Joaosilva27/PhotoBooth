@@ -115,7 +115,7 @@ function App() {
               height={400}
               width={600}
               videoConstraints={{
-                facingMode: "environment", // Use rear camera (for phone cameras)
+                facingMode: "user", // Use rear camera (for phone cameras)
                 aspectRatio: 1.77777777778, // Force horizontal aspect ratio (16:9)
                 width: { ideal: 1280 },
                 height: { ideal: 720 },
