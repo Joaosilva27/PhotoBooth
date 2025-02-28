@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import "./App.css";
 import Webcam from "react-webcam";
 import GithubIcon from "./assets/icons/githubIcon.png";
@@ -13,6 +13,19 @@ function App() {
   const [imgSrcThree, setImgSrcThree] = useState<string | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
   const [numberCountdown, setNumberCountdown] = useState<number>(0);
+
+  useEffect(() => {
+    if (webcamRef.current) {
+      const videoElement = webcamRef.current.video;
+
+      if (videoElement && window.innerWidth < 768) {
+        // Apply a rotation to keep it horizontal on mobile
+        videoElement.style.transform = "rotate(90deg)";
+        videoElement.style.width = "100%";
+        videoElement.style.height = "auto";
+      }
+    }
+  }, []);
 
   // utility function for delaying
   const delay = (ms: number) =>
@@ -115,12 +128,13 @@ function App() {
               height={400}
               width={600}
               videoConstraints={{
-                facingMode: "user", // Use rear camera (for phone cameras)
-                aspectRatio: 1.77777777778, // Force horizontal aspect ratio (16:9)
+                facingMode: "user", // Use front-facing (selfie) camera
+                aspectRatio: 16 / 9, // Enforce 16:9 aspect ratio for horizontal layout
                 width: { ideal: 1280 },
                 height: { ideal: 720 },
               }}
               className="object-cover border-gray-700 rounded-xl mb-2"
+              screenshotFormat="image/jpeg"
             />
 
             {/* Countdown Text centered over the webcam */}
