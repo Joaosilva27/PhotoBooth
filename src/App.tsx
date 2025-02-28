@@ -12,6 +12,7 @@ function App() {
   const [imgSrcTwo, setImgSrcTwo] = useState<string | null>(null);
   const [imgSrcThree, setImgSrcThree] = useState<string | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
+  const [numberCountdown, setNumberCountdown] = useState<number>(0);
 
   // utility function for delaying
   const delay = (ms: number) =>
@@ -23,23 +24,38 @@ function App() {
     setImgSrcThree(null);
     setIsCapturing(true);
 
+    const numberCountdown = async () => {
+      await delay(1500);
+      setNumberCountdown(3);
+      await delay(1500);
+      setNumberCountdown(2);
+      await delay(1500);
+      setNumberCountdown(1);
+      await delay(1500);
+      setNumberCountdown(0);
+    };
+
     const captureSequence = async () => {
       if (webcamRef.current) {
         try {
+          await numberCountdown();
           // capture first image
           const imageSrcOne = webcamRef.current.getScreenshot();
           setImgSrcOne(imageSrcOne);
           console.log("First image captured:", imageSrcOne);
 
           // wait for 5 seconds before capturing the second image
-          await delay(5000);
+
+          await numberCountdown();
+          await delay(1500);
 
           // capture second image after the delay
           const imageSrcTwo = webcamRef.current.getScreenshot();
           setImgSrcTwo(imageSrcTwo);
           console.log("Second image captured:", imageSrcTwo);
 
-          await delay(5000);
+          await numberCountdown();
+          await delay(1500);
           // capture third image after the delay
           const imageSrcThree = webcamRef.current.getScreenshot();
           setImgSrcThree(imageSrcThree);
@@ -101,6 +117,7 @@ function App() {
             width={600}
             className="object-cover"
           />
+          {numberCountdown != 0 && numberCountdown}
         </div>
 
         <div
