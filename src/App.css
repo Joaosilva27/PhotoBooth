@@ -11,3 +11,56 @@
 body {
   background-color: #1e201e;
 }
+
+/* App.css */
+
+/* Countdown text styling */
+.countdown-text {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the text */
+  font-family: "Helvetica", sans-serif; /* Modern, sans-serif font */
+  font-size: 6rem; /* Large font size */
+  font-weight: bold; /* Bold font */
+  color: white;
+  background: -webkit-linear-gradient(
+    45deg,
+    #6a11cb,
+    #2575fc
+  ); /* Gradient background */
+  -webkit-background-clip: text; /* Clip the gradient to text */
+  text-fill-color: transparent; /* Make text transparent to show gradient */
+  animation: fadeIn 1s ease, scaleUp 1s ease-in-out; /* Animation for fading in and scaling up */
+  z-index: 10;
+}
+
+/* Smooth fade-in effect */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Scale-up effect */
+@keyframes scaleUp {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Smaller screen adjustments */
+@media (max-width: 600px) {
+  .countdown-text {
+    font-size: 4rem; /* Adjust font size for smaller screens */
+  }
+}

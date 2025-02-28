@@ -47,7 +47,6 @@ function App() {
           // wait for 5 seconds before capturing the second image
 
           await numberCountdown();
-          await delay(1500);
 
           // capture second image after the delay
           const imageSrcTwo = webcamRef.current.getScreenshot();
@@ -55,7 +54,6 @@ function App() {
           console.log("Second image captured:", imageSrcTwo);
 
           await numberCountdown();
-          await delay(1500);
           // capture third image after the delay
           const imageSrcThree = webcamRef.current.getScreenshot();
           setImgSrcThree(imageSrcThree);
@@ -111,14 +109,20 @@ function App() {
 
       <div className="flex flex-row flex-wrap justify-center items-center">
         <div className="relative flex items-center flex-col overflow-hidden transition-all duration-300 h-fit">
-          <Webcam
-            ref={webcamRef}
-            height={400}
-            width={600}
-            className="object-cover border-gray-700 rounded-xl mb-2"
-          />
+          <div>
+            <Webcam
+              ref={webcamRef}
+              height={400}
+              width={600}
+              className="object-cover border-gray-700 rounded-xl mb-2"
+            />
 
-          {numberCountdown != 0 && numberCountdown}
+            {/* Countdown Text centered over the webcam */}
+            <span className="countdown-text">
+              {numberCountdown !== 0 ? numberCountdown : ""}
+            </span>
+          </div>
+
           <div className="flex gap-4">
             <button
               onClick={() => (isCapturing ? null : capture())}
