@@ -64,29 +64,3 @@ body {
     font-size: 4rem; /* Adjust font size for smaller screens */
   }
 }
-
-/* Force the container to have a 16:9 aspect ratio */
-.webcam-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  overflow: hidden;
-}
-
-.webcam-container video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transform: rotate(0deg); /* Ensure the video is in the correct orientation */
-}
-
-@media (max-width: 768px) {
-  /* Force landscape on mobile if needed */
-  .webcam-container video {
-    transform: rotate(90deg); /* Rotate the video on smaller devices */
-    width: 100%;
-    height: auto;
-  }
-}

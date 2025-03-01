@@ -127,12 +127,6 @@ function App() {
               ref={webcamRef}
               height={400}
               width={600}
-              videoConstraints={{
-                facingMode: "user", // Use front-facing (selfie) camera
-                aspectRatio: 16 / 9, // Enforce 16:9 aspect ratio for horizontal layout
-                width: { ideal: 1280 },
-                height: { ideal: 720 },
-              }}
               className="object-cover border-gray-700 rounded-xl mb-2"
               screenshotFormat="image/jpeg"
             />
